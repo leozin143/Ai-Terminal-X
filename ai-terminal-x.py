@@ -1,8 +1,8 @@
 #!/usr/bin/env python3 
 # -*- coding: utf-8 -*-
 
-# Ai-CMD-X: Your AI-Powered Linux Assistant 
-# After launching the Ai-CMD-X i thought i should make one for linux ...it have more power then that ai-cmd-x
+# Ai-Terminal-X: Your AI-Powered Linux Assistant 
+# After launching the Ai-Terminal-X i thought i should make one for linux ...it have more power then that ai-terminal-x
 
 # --- Required libraries ---
 # pip install google-generativeai python-dotenv
@@ -37,7 +37,7 @@ gold = "\033[38;5;220m"; cyan = "\033[36m"; yellow = "\033[93m"; reset = "\033[0
 # --- Configuration ---
 # settings for how the script behaves.
 # the name we'll give our special tmux window.
-TMUX_VIEWER_SESSION_NAME = "ai-cmd-x-interactive-viewer"
+TMUX_VIEWER_SESSION_NAME = "ai-terminal-x-interactive-viewer"
 # which terminal program to pop open for visual output. make sure it likes the -e flag.
 VISUAL_TERMINAL = "xfce4-terminal" # Make sure this terminal supports the -e flag correctly
 # how much scrollback history to keep in the tmux viewer.
@@ -160,17 +160,30 @@ def configure_ai(api_key):
 # these are the instructions we give to the ai.
 # the main set of rules for asking the ai to generate a linux command and explanation.
 base_prompt = """
-You are an AI assistant generating Linux Bash commands based on user requests. Request: {INPUT}
-Rules:
-1. FIRST line: ONLY the Linux Bash command. Assume standard tools exist. Prioritize correctness and common usage.
-2. SECOND line: Start with "Explanation: " followed by ONE concise sentence explaining the command's main purpose and key options.
-3. ONLY output command and explanation lines. No extra text, greetings, or warnings.
-4. Simple commands unless complexity is explicitly requested.
-5. Complex pipes/operators should fit on the single command line.
+You are an AI assistant that generates accurate Linux Bash commands based on user requests.
+The input request may be written in any language (such as English, Urdu, Hindi, Arabic, Spanish, etc.),
+and you must intelligently understand and interpret the task regardless of the language used.
+Your job is to output only the Bash command and a one-line explanation.
+The first line of your response should be the correct and commonly used Linux Bash command using standard tools.
+The second line should begin with “Explanation:” followed by a concise sentence that clearly describes the command’s main function and any key options used.
+You must avoid any extra text, greetings, or markdown — just the command and explanation in plain text.
 
-Example Request: list files with details ; Example Response:
+Keep the command simple and correct by default, unless the user specifically requests a complex operation. If complexity is required, ensure that the use of pipes or logical operators still fits neatly on a single command line. Regardless of the input language, always detect the intent properly and respond as if the request were made in English. The explanation must always remain in English only for consistency, even if the request is in another language.
+
+Example Request in English:
+list files with details
+Response:
 ls -lah
 Explanation: Lists all files (including hidden) in long format with human-readable sizes.
+
+Example Request in Urdu:
+تمام فائلیں تفصیل کے ساتھ دکھائیں
+Response:
+ls -lah
+Explanation: Lists all files (including hidden) in long format with human-readable sizes.
+
+The task is : {INPUT}
+
 """
 # the instructions for asking the ai if a command looks dangerous.
 risk_check_prompt = """
@@ -319,7 +332,23 @@ def gemini_command_and_explanation(model, user_input):
 def explain_command(model, command_input):
     """Asks AI to explain a concept or command."""
     # use a slightly different prompt for explanations.
-    prompt = f"Explain the following Linux concept or command in simple terms for a user who may be new to Linux:\n\n{command_input}\n\nKeep the explanation concise and focused on the main purpose and common usage + a exmaple."
+    prompt = f"""
+    "Imagine you're explaining the following Linux concept or command "
+    "to someone who’s new to Linux. Make the explanation clear, concise, "
+    "and easy to understand. Focus on the main purpose, common usage, "
+    "and why someone would use this command in real-world scenarios. "
+    "If the command is part of the explanation, include it clearly with a brief example. "
+    "Format the output as follows:\n\n"
+
+    "Imagine this: (2-3 lines describing the context or scenario where the command would be used)\n"
+    "Explanation: (2-3 lines explaining the command’s main purpose, how it works, and why it's useful)\n"
+    "Command: (The actual Linux command for clarity)\n"
+    "Example: (A practical example to show how the command is used with output or a scenario)"
+
+    "Here is the concept or command I want to explain:\n\n"
+    "{command_input}\n\n"
+    """
+    
     print(f"~~~{blue} Asking AI for explanation of '{command_input[:50]}...'...{reset}")
     try:
         # use slightly less strict safety for explanations, but still block obviously bad stuff.
@@ -383,7 +412,7 @@ def check_external_tools():
     # if any mandatory tools are missing, print an error and exit.
     if missing:
         print(f"{red}Error: Cannot find required command(s): {', '.join(missing)}.{reset}")
-        print(f"{yellow}Please install them (e.g., 'sudo apt update && sudo apt install tmux {VISUAL_TERMINAL} xclip') and ensure they are in your system's PATH.{reset}")
+        print(f"{yellow}Please Run {gold} pyhton setup.py{reset}then run {gold}bash run.sh{reset}")
         sys.exit(1)
 
     # report the tools that were found.
@@ -737,7 +766,7 @@ def handle_command_execution(ai_generated_command, primary_mode, execution_mode,
 # ==================================
 # ok, let's get things rolling.
 # --- Initial Setup ---
-print(f"{purple}--- Starting Ai-CMD-X Assistant ---{reset}")
+print(f"{purple}--- Starting Ai-Terminal-X Assistant ---{reset}")
 # first, get the api key (exits if it fails).
 api_key = load_api_key()        # Exits if key not found/entered
 # next, configure the connection to the ai (exits if it fails).
@@ -808,7 +837,7 @@ while True:
             primary_mode = "suggester"
         elif choice1 == "4":
             # if they choose 4, exit the whole script.
-            print(f"\n{red}Exiting Ai-CMD-X. Goodbye!{reset}") 
+            print(f"\n{red}Exiting Ai-Terminal-X. Goodbye!{reset}") 
             sys.exit(0)
         else:
             # invalid choice, loop will ask again.
@@ -833,7 +862,7 @@ while True:
         
         # Provide context-specific instructions based on execution mode.
         if execution_mode == "persistent_single_viewer":
-            print(f"{green}\n>>>>Enter command. {red}Use Ctrl+C{reset} {green}here to interrupt running command.{reset}")
+            print(f"{green}\n>>>>Enter command. {red}Use Ctrl+C{reset} {green}here to interrupt running command | You can scroll in persistent mode by pressing{gold} ctrl + B then [{reset} {blue}ok.{reset}")
         else: # Separate Window mode
             print(f"{blue}\n>>>>Enter your command request. Each command will open in a new window that pauses.{reset}")
        
@@ -852,7 +881,7 @@ while True:
             """
         print(f"\n{banner3}")
         print(f"\n{blue}>>> Mode Selected: {reset}{gold}Command Suggester{reset} {blue} <<<{reset}")
-        print(f"{green}\n>>>>Enter a task description{reset}{green} (e.g., 'find large files', 'check network connections').{reset}")
+        print(f"{green}\n>>>>Enter a task description{reset}{green} (e.g., 'find large files', 'check network connections'){reset}")
         print(f"{gold}Type {reset}' back '{blue} to change modes, {reset}' quit '{red} to exit.{reset}")
 
 
@@ -864,15 +893,15 @@ while True:
         # get the command request or control command from the user.
         # display a prompt that shows the current mode.
         if primary_mode == "suggester":
-             prompt_display = f"\n{gold}Ai-CMD-X {reset}{green}(Expert Command Suggester){yellow}>{reset} "
+             prompt_display = f"\nAi-Terminal-X (Expert Command Suggester)</> : "
              
         else: # Quick or Interactive
-             prompt_display = f"\n{gold}Ai-CMD-X {reset}{green}({primary_mode.capitalize()}/{exec_mode_friendly}){yellow}>{reset} "
+             prompt_display = f"\nAi-Terminal-X ({primary_mode.capitalize()}/{exec_mode_friendly})</> :  "
 
         try:
             # wait for the user to type something and press enter.
             user_input = input(prompt_display).strip()
-        except KeyboardInterrupt: # Catch Ctrl+C in *this* terminal (where Ai-CMD-X runs)
+        except KeyboardInterrupt: # Catch Ctrl+C in *this* terminal (where Ai-Terminal-X runs)
             # handle ctrl+c press in the main script's terminal.
             print() # Newline after ^C
             # --- NEW/MODIFIED --- (Interrupt logic applies only to persistent mode)
@@ -889,11 +918,11 @@ while True:
                 continue # Continue inner loop, ready for next input
             else:
                 # if not in persistent mode, or viewer isn't active, ctrl+c here just exits the main script.
-                print(f"\n{red}Ctrl+C detected. Exiting Ai-CMD-X.{reset}")
+                print(f"\n{red}Ctrl+C detected. Exiting Ai-Terminal-X.{reset}")
                 sys.exit(0)
         except EOFError: # Catch Ctrl+D
             # handle ctrl+d (end of file), treat it as quitting.
-            print(f"\n{red}EOF detected. Exiting Ai-CMD-X.{reset}")
+            print(f"\n{red}EOF detected. Exiting Ai-Terminal-X.{reset}")
             sys.exit(0)
 
         # save the original input for logging purposes.
@@ -909,7 +938,7 @@ while True:
 
         # check for quit commands.
         if user_input_lower in ["quit", "exit"]:
-            print(f"\n{red}Exiting Ai-CMD-X as requested. Goodbye!{reset}")
+            print(f"\n{red}Exiting Ai-Terminal-X as requested. Goodbye!{reset}")
             sys.exit(0)
         # check for the 'back' command.
         if user_input_lower == "back":
@@ -987,7 +1016,7 @@ while True:
             # check if the user input starts with "explain", "what is", etc.
             explain_triggered = False
             topic_to_explain = ""
-            explain_prefixes = ("explain ", "what is ", "what's ", "tell me about ")
+            explain_prefixes = ("explain ", "what is ", "what's ", "tell me about ","describe ")
             for prefix in explain_prefixes:
                 if user_input_lower.startswith(prefix):
                     # make sure there's something *after* the prefix.
@@ -1007,13 +1036,13 @@ while True:
             if explain_triggered:
                 # ...and they provided a topic...
                 if topic_to_explain: # Only ask AI if we have a valid topic
-                    print(f"\n{blue}--- Getting Explanation ---{reset}")
+                    print(f"\n{blue}-------------- Getting Explanation --------------{reset}")
                     # ...ask the ai for an explanation.
                     explanation_text = explain_command(ai_model, topic_to_explain)
                     # print the explanation nicely formatted.
-                    print(f"\n{gold}AI Explanation:{reset}")
+                    print(f"\n{gold}AI Explanation:\n{reset}")
                     print(explanation_text) # Assumes explain_command includes color for errors
-                    print(f"{gold}-------------------{reset}")
+                    print(f"{gold}--------------------------------------------------{reset}")
                 # after handling the explain request (or invalid explain), go back to ask for new input.
                 continue # Go to next prompt asking for input (skip command generation)
 
@@ -1171,4 +1200,4 @@ while True:
 
 # --- End of Main Loop ---
 # just a final message if the script somehow exits the main loop normally (shouldn't really happen).
-print(f"\n{purple}Ai-CMD-X loop ended.{reset}")
+print(f"\n{purple}Ai-Terminal-X loop ended.{reset}")

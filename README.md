@@ -101,16 +101,17 @@ cd Ai-Terminal-X
 In terminal:
 
 ```sh
+chmod +x setup.py
 
 python setup.py
 
 ```
 
-After setup.py run below command
+After setup.py the run.sh file will automatically create so run below command and everytime you just need to type below command in terminal ..Okay..!
 
 ```sh
 
-python ai-terminal-x.py
+./run.sh or bash run.sh
 
 ```
 
@@ -126,6 +127,16 @@ Done!🚀
 
 * Python 3.8+
 * Gemini API Key (Get it [here](https://aistudio.google.com/apikey))
+
+## 🔄 Update Notes for `Ai-Terminal-X`
+
+> 🚀 **Latest Improvements**
+>
+> * 🐞 **Bug Fixes:** Major installation issues resolved – now easier and smoother to install and run.
+> * 🌐 **Multi-language Support:** Now supports multiple languages for a broader user base.
+> * ✨More Enhanced Prompt
+> * 📝 **Text Input Upgrade:** Fixed the text overlapping issue – now supports multi-line input seamlessly.
+> * 💡 **Usability Enhancements:** Improved interface for a more user-friendly experience.
 
 ### 🔐 Safety and Permissions
 
