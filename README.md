@@ -12,6 +12,10 @@ Order in plain English — and watch real terminal magic happen instantly! 🪄
 
 AI-Terminal-X is **a game-changing AI-Powered Terminal Assistant** designed to revolutionize the way you interact with your Linux terminal. Whether you're a beginner, an ethical hacker, or a seasoned professional, AI-Terminal-X transforms your daily command-line operations, enhancing productivity and learning.
 
+#### Watch Full Demo LinkedIn:https://www.linkedin.com/posts/muhammad-izaz-haider-091639314_alhamdulilah-proud-to-share-my-latest-project-ugcPost-7324760286094065664-dsAJ
+
+#### Blog Post:https://medium.com/@the-pentrix/ai-terminal-x-ai-powered-intelligent-linux-command-line-copilot-04629dfaf057
+
 ### 🔥 **A Powerful Combination of**
 
 * **Linux Terminal (XFCE)** – Reliable command execution
